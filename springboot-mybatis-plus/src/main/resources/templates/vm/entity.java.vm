@@ -1,0 +1,81 @@
+package ${package.Entity};
+
+#foreach($pkg in ${table.importPackages})
+import ${pkg};
+#end
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+## 表备注，作者，日期
+/**
+ * $!{table.comment}
+ * @author ${author}
+ * @date ${date}
+ */
+#if(${entityLombokModel})
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+#end
+#if(${superEntityClass})
+public class ${entity} extends ${superEntityClass}#if(${activeRecord})<${entity}>#end {
+#elseif(${activeRecord})
+public class ${entity} extends Model<${entity}> {
+#else
+public class ${entity} implements Serializable {
+#end
+
+    private static final long serialVersionUID = 1L;
+## ----------  BEGIN 字段循环遍历  ----------
+#foreach($field in ${table.fields})
+
+    #if($field.propertyType == "Integer" || $field.propertyType == "int")
+        #if(${field.keyFlag})
+            #if($field.comment == "")
+    /**
+     * ${field.name}
+     */
+            #else
+    /**
+     * ${field.comment}
+     */
+            #end
+            #if(${field.keyIdentityFlag})
+    @TableId(value = "${field.name}", type = IdType.AUTO)
+            #elseif(!$null.isNull(${idType}) && "$!idType" != "")
+    @TableId(value = "${field.name}", type = IdType.${idType})
+            #elseif(${field.convert})
+    @TableId("${field.name}")
+            #end
+        #else
+    /**
+     * ${field.comment}
+     */
+        #end
+    #elseif($field.propertyType == "LocalDateTime")
+    /**
+     * ${field.comment}
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    #else
+    /**
+     * ${field.comment}
+     */
+    #end
+    private ${field.propertyType} ${field.propertyName};
+#end
+
+    #if(${activeRecord})
+    @Override
+    protected Serializable pkVal(){
+    #foreach($field in ${table.fields})
+        #if(${field.keyFlag})
+        return this.${field.propertyName};
+        #end
+    #end
+    }
+    #end
+}

@@ -1,0 +1,18 @@
+server:
+  port: 80
+  servlet:
+    contest-path: /
+spring:
+  application:
+    name: springboot-swagger2
+
+#springdoc:
+  #  version: 'v0.0.1'
+  #  api-docs:
+  #    enabled: true
+  #    path:
+  #  packages-to-scan: com.dev.swagger
+  #  swagger-ui:
+  #    path: /swagger-ui.html
+  #    tagsSorter: one
+  #    displayRequestDuration: true

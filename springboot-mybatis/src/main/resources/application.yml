@@ -1,0 +1,27 @@
+server:
+  # 端口
+  port: 80
+  servlet:
+    # web路径
+    context-path: /
+
+# 数据源配置
+spring:
+  application:
+    name: springboot-mybatis
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost/simple?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: 123456
+    # 初始连接数
+    initialSize: 5
+    # 最小连接池数量
+    minIdle: 10
+    # 最大连接池数量
+    maxActive: 20
+
+mybatis:
+  # 配置xml文件路径
+  mapper-locations: classpath:mybatis/*Mapper.xml

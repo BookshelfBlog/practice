@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.mybatis.mapper.UserDao">
+
+    <!-- 查询结果映射 -->
+    <resultMap id="BaseResultMap" type="com.dev.mybatis.entity.User">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="age" property="age"/>
+        <result column="sex" property="sex"/>
+        <result column="phone" property="phone"/>
+        <result column="address" property="address"/>
+        <result column="birthday" property="birthday"/>
+    </resultMap>
+
+    <!-- 查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, age, sex, phone, address, birthday
+    </sql>
+
+    <!--
+        parameterType - 入参类型
+        resultMap     - 返回值
+        useCache      - 开启二级缓存(一级缓存为session域,二级缓存为namespace域,二级缓存会在用户insert、update、remove操作后更新)
+     -->
+    <select id="getUserList" parameterType="com.dev.mybatis.entity.User" resultMap="BaseResultMap" useCache="true">
+        select
+            <include refid="Base_Column_List" />
+        from
+            user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="age != null">
+                and age = #{age}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="birthday != null and birthday != ''">
+                and birthday = #{birthday}
+            </if>
+        </where>
+    </select>
+
+    <select id="getUserById" parameterType="int" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List" />
+        from
+            user
+        where
+            id = #{id}
+    </select>
+
+    <!--
+        keyProperty         - 新增成功返回id
+        useGeneratedKeys    - 允许 JDBC 支持自动生成主键(如果数据库已设置id自增则不需要)
+     -->
+    <insert id="insertUserSelective" parameterType="com.dev.mybatis.entity.User">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">
+                name,
+            </if>
+            <if test="age != null">
+                age,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="phone != null and phone != ''">
+                phone,
+            </if>
+            <if test="address != null and address != ''">
+                address,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                #{age,jdbcType=INTEGER},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="phone != null and phone != ''">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null and address != ''">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateUserSelective" parameterType="com.dev.mybatis.entity.User">
+        update user
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                age = #{age,jdbcType=INTEGER},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null and birthday != ''">
+                birthday = #{birthday,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="removeById" parameterType="int">
+        delete from user where id = #{id}
+    </delete>
+
+    <delete id="removeBySelective" parameterType="com.dev.mybatis.entity.User">
+        delete from user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="age != null">
+                and age = #{age}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="birthday != null and birthday != ''">
+                and birthday = #{birthday}
+            </if>
+        </where>
+    </delete>
+</mapper>
