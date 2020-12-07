@@ -1,0 +1,89 @@
+package $!{package.Controller};
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.dev.mybatisPlus.util.AjaxResult;
+import org.apache.ibatis.annotations.Delete;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import javax.validation.Valid;
+import com.github.pagehelper.PageHelper;
+import com.dev.mybatisPlus.util.page.PageDomain;
+import com.dev.mybatisPlus.util.page.TableDataInfo;
+import java.util.Objects;
+import $!{package.Service}.$!{table.serviceName};
+import $!{package.Entity}.$!{table.entityName};
+
+#if(${superControllerClassPackage})
+import $!{superControllerClassPackage};
+#end
+
+/**
+ *
+ *  $!{table.comment} 前端控制器
+ *
+ * @author: $!{author}
+ * @date: $!{date}
+ */
+@RestController
+@RequestMapping({"#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end"})
+#if(${kotlin})
+class $!{table.controllerName}#if(${superControllerClass}) : $!{superControllerClass}()#end
+
+#else
+@Api(tags = "$!{table.comment}管理")
+#if(${superControllerClass})
+public class $!{table.controllerName} extends $!{superControllerClass} {
+#else
+public class $!{table.controllerName} {
+#end
+
+    @Autowired
+    private $!{table.serviceName} service;
+
+    @GetMapping({"list"})
+    public TableDataInfo list($!{table.entityName} entity,PageDomain pageDomain){
+        PageHelper.startPage(CheckPageDomain(pageDomain));
+        QueryWrapper<$!{table.entityName}> qw = new QueryWrapper<$!{table.entityName}>();
+        qw.setEntity(entity)#foreach($field in ${table.fields})#if(${field.keyFlag}).orderByAsc("$!{field.name}");#end#end
+        return getDataTable(service.list(qw));
+    }
+
+    @GetMapping({"/getOne/{id}"})
+    public AjaxResult getById(@PathVariable("id") int id) {
+        return success("查询成功!",service.getById(id));
+    }
+
+    @PostMapping({"save"})
+    public AjaxResult save(@RequestBody @Valid $!{table.entityName} entity) {
+        return super.toAjax(service.save(entity));
+    }
+
+    @PutMapping({"update"})
+    public AjaxResult update(@RequestBody $!{table.entityName} entity) {
+    #foreach($entity in ${table.fields})
+        #if(${entity.keyFlag})##生成主键排在第一位
+        #set($getId = "entity.get" + $entity.propertyName.substring(0, 1).toUpperCase() + $entity.propertyName.substring(1) + "()")
+        if(Objects.isNull($getId)){
+            return error("参数为空!");
+        }
+        var result = service.getById($getId);
+        #end
+    #end
+        if(Objects.nonNull(result)){
+            return super.toAjax(service.updateById(entity));
+        }else{
+            return error("数据不存在!");
+        }
+    }
+
+    @DeleteMapping({"/remove/{id}"})
+    public AjaxResult remove(@PathVariable("id") int id) {
+        var entity = service.getById(id);
+        if(Objects.nonNull(entity)){
+            return super.toAjax(service.removeById(id));
+        }else{
+            return error("数据不存在!");
+        }
+    }
+}
+#end
