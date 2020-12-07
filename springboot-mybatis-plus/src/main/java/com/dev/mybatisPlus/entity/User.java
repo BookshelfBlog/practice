@@ -15,7 +15,7 @@ import lombok.Data;
  * @date 2020-11-18
  */
 @Data
-@TableName("user")
+@TableName(value = "user")
 public class User extends Model<User> {
 
     private static final long serialVersionUID = 1L;
