@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>我是标题</title>
+</head>
+<body>
+    <div>
+        <span th:text="${hello}"></span>
+    </div>
+<!--    <div>-->
+<!--        <select id="language"></select>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <select id="hot">-->
+<!--            <option th:each="item: ${hot}"-->
+<!--                    th:text="${item['key']}"-->
+<!--                    th:value="${item['value']}" />-->
+<!--        </select>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <dl th:object="${person}" >-->
+<!--            <dt th:text="*{name}"></dt>-->
+<!--            <dd th:text="${person.content}"></dd>-->
+<!--        </dl>-->
+<!--    </div>-->
+
+
+<!--    <script th:inline="javascript">-->
+<!--        var language = [[${language}]];-->
+
+<!--        var elementById = document.getElementById("language");-->
+<!--        language.forEach((value, index) => {-->
+<!--            elementById.innerHTML += "<option text='" + value + "' value='" + index + "'>" + value + "</option>";-->
+<!--        })-->
+<!--    </script>-->
+</body>
+</html>
