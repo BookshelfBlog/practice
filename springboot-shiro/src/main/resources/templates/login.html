@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+<body>
+    <form th:action="@{/login}" method="post">
+        loginName:<input type="text" name="loginName" placeholder="登录名">
+        password:<input type="password" name="password">
+        <input type="submit" value="登录" />
+    </form>
+</body>
+</html>

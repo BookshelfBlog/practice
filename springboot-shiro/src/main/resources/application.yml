@@ -1,0 +1,47 @@
+server:
+  port: 80
+  servlet:
+    contest-path: /
+
+logging:
+  level:
+    com.dev.shiro.mapper: debug
+
+spring:
+  application:
+    name: springboot-shiro
+  thymeleaf:
+    prefix:
+      classpath: /template
+    suffix: .html
+    encoding: UTF-8
+    cache: false
+    mode: HTML5
+  jackson:
+    #参数意义：
+    #JsonInclude.Include.ALWAYS              默认
+    #JsonInclude.Include.NON_DEFAULT     属性为默认值不序列化
+    #JsonInclude.Include.NON_EMPTY         属性为 空（””） 或者为 NULL 都不序列化
+    #JsonInclude.Include.NON_NULL           属性为NULL   不序列化
+    default-property-inclusion: ALWAYS
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost/simple?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: 123456
+    # 初始连接数
+    initialSize: 5
+    # 最小连接池数量
+    minIdle: 10
+    # 最大连接池数量
+    maxActive: 20
+
+shiro:
+  loginUrl: /login
+  unauthorizedUrl: /unauth
+  indexUrl: /index
