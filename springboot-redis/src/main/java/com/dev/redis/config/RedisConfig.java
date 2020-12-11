@@ -16,7 +16,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 /**
  * @ClassName : RedisConfig  //类名
  * @Description : redis配置  //描述
- * @Author : Hao Niu  //作者
+ *
  * @Date: 2020-11-19 16:27  //时间
  */
 @Configuration

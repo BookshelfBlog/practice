@@ -5,7 +5,7 @@ import com.dev.shiro.entity.Login;
 import java.util.Set;
 
 /**
- * @author Hao Niu //作者
+ * @author admin //作者
  */
 public interface LoginService {
     /**

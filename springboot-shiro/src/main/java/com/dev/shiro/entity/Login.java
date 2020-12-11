@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 /**
  * @ClassName : User  //类名
  * @Description : 用户实体类  //描述
- * @Author : Hao Niu  //作者
+ *
  * @Date: 2020-12-07 15:25  //时间
  */
 @Data

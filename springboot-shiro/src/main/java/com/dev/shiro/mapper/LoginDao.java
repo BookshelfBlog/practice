@@ -8,7 +8,7 @@ import java.util.Set;
 
 /**
  * @Description : LoginDao  //描述
- * @Author : Hao Niu  //作者
+ *
  * @Date: 2020-12-07 16:16  //时间
  */
 public interface LoginDao {

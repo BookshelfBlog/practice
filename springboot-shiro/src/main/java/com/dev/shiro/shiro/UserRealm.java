@@ -14,7 +14,7 @@ import java.util.Objects;
 
 /**
  * @Description : 用户配置  //描述
- * @Author : Hao Niu  //作者
+ *
  */
 @Slf4j
 public class UserRealm extends AuthorizingRealm {

@@ -14,7 +14,7 @@ import java.util.Set;
 /**
  * @ClassName : LoginServiceImpl  //类名
  * @Description : 登录实现类  //描述
- * @Author : Hao Niu  //作者
+ *
  * @Date: 2020-12-07 16:50  //时间
  */
 @Service

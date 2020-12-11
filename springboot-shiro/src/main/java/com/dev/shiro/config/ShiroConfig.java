@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * @ClassName : ShiroConfig  //类名
  * @Description : shiro配置  //描述
- * @Author : Hao Niu //作者
+ * @Author : admin //作者
  * @Date: 2020-12-07 14:51  //时间
  */
 @Configuration
