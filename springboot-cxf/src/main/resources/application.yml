@@ -1,0 +1,9 @@
+server:
+  port: 80
+  servlet:
+    contest-path: /
+spring:
+  application:
+    name: springboot-cxf
+cxf:
+  path: /user
