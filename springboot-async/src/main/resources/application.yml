@@ -1,0 +1,7 @@
+server:
+  port: 80
+  servlet:
+    contest-path: /
+spring:
+  application:
+    name: springboot-async

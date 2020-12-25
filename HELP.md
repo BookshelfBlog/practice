@@ -11,6 +11,7 @@
 * Thymeleaf
 * Aop
 * Spring Cache
+* Async
 ## 开发环境
 * JDK 13
 * Idea 2020.1
