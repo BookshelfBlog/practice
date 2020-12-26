@@ -51,7 +51,7 @@ public class SendMessage {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        log.info("有新连接加入：{}，当前在线人数为：{}", session.getId(), onlineCount.get());
+        log.info("用户：{}加入连接，当前在线人数为：{}", userId, onlineCount.get());
     }
 
     /**
@@ -86,7 +86,7 @@ public class SendMessage {
             }
         }
 
-        log.info("服务端收到客户端[{}]的消息:{}", session.getId(), message);
+        log.info("服务端收到客户端[{}]的消息:{}", userId, message);
     }
 
     @OnError

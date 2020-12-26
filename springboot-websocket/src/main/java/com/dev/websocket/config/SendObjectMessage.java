@@ -39,7 +39,7 @@ public class SendObjectMessage {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        log.info("有新连接加入：{}，当前在线人数为：{}", session.getId(), onlineCount.get());
+        log.info("有新连接加入，当前在线人数为：{}", onlineCount.get());
     }
 
     /**
@@ -50,7 +50,7 @@ public class SendObjectMessage {
         socket.remove(this);
         // 在线数减1
         onlineCount.decrementAndGet();
-        log.info("用户退出，当前在线人数为：{}", session.getId(), onlineCount.get());
+        log.info("用户退出，当前在线人数为：{}", onlineCount.get());
     }
 
     /**
@@ -66,7 +66,7 @@ public class SendObjectMessage {
                 sendObjectMessage.sendMessage(message);
             }
         }
-        log.info("服务端收到客户端[{}]的消息:{}", session.getId(), message);
+        log.info("服务端收到客户端的消息:{}", message);
     }
 
     @OnError
