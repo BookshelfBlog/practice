@@ -5,3 +5,16 @@ server:
 spring:
   application:
     name: springboot-async
+
+#线程池配置
+Thread:
+  #最大容量
+  MaxPoolSize: 100
+  #核心线程数
+  CorePoolSize: 10
+  #缓冲队列数
+  QueueCapacity: 100
+  #允许线程空闲时间（单位：默认为秒）
+  KeepAliveSeconds: 10
+  #线程名称前缀
+  ThreadNamePrefix: task-pool-%d

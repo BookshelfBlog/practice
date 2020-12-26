@@ -4,6 +4,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
 /**
@@ -27,18 +28,18 @@ public class Task {
         System.out.println("任务三");
     }
 
-    public Future<String> run4(){
+    public CompletableFuture<String> run4(){
         System.out.println("任务四");
-        return new AsyncResult<String>("执行成功!");
+        return CompletableFuture.completedFuture("执行成功!");
     }
 
-    public Future<Integer> run5(){
+    public CompletableFuture<Integer> run5(){
         System.out.println("任务五");
-        return new AsyncResult<Integer>(0);
+        return CompletableFuture.completedFuture(0);
     }
 
-    public Future<Boolean> run6(){
+    public CompletableFuture<Boolean> run6(){
         System.out.println("任务六");
-        return new AsyncResult<Boolean>(true);
+        return CompletableFuture.completedFuture(true);
     }
 }
