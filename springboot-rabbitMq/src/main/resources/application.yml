@@ -1,0 +1,58 @@
+server:
+  port: 80
+  servlet:
+    contest-path: /
+spring:
+  application:
+    name: springboot-amqp
+  rabbitmq:
+    host: 192.168.0.149
+    port: 5672
+    username: admin
+    password: admin
+    virtual-host: /
+    #消息发送失败返回队列中
+    publisher-returns: true
+    publisher-confirm-type: correlated
+    #设置为true的时候RabbitTemplate能够发送重试
+    template:
+      retry:
+        enabled: true
+        max-attempts: 3 # 传递消息的最大尝试次数
+        max-interval: 3000 # 尝试的最大时间间隔
+      mandatory: true
+    #消费端配置
+    listener:
+      simple:
+        #自动签收auto  手动 manual
+        acknowledge-mode: manual
+        #限流（海量数据，同时只能过来一条）
+        prefetch: 1
+        default-requeue-rejected: false
+#配置参数，一般情况下声明为全局静态常量
+amqp-config:
+  direct:
+    queue: directQueue
+    queueB: anotherQueue
+    exchange: directExchange
+    routingKey: directRouting
+  fanout:
+    one:
+      queue: fanoutOne
+    two:
+      queue: fanoutTwo
+    exchange: fanoutExchange
+  topic:
+    student:
+      queue: topic.student
+    teacher:
+      queue: topic.teacher
+    exchange: topicExchange
+    routing: #.student
+  delay:
+    deadLetter: deadLetter
+    delay: delay
+    delayExchange: delayExchange
+    dlxExchange: deadLetterExchange
+    delayRouting: delayRoutingKey
+    dlxRoutingKey: deadLetterRoutingKey
