@@ -1,7 +1,6 @@
 package com.dev.amqp.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +55,12 @@ public class Producer {
     private String delayRouting;
     @Value("${amqp-config.delay.dlxRoutingKey}")
     private String dlxRoutingKey;
+
+
+    @Value("${amqp-config.delay.dpExchange}")
+    private String dpExchange;
+    @Value("${amqp-config.delay.dpRoutingKey}")
+    private String dpRoutingKey;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
@@ -122,6 +127,15 @@ public class Producer {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("this message comes from dead letter Exchange,time:").append(LocalDateTime.now());
         rabbitTemplate.convertAndSend(dlxExchange, dlxRoutingKey, stringBuffer.toString(), create());
+    }
+
+    public void dp(Integer time){
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("this message comes from delay plugins Exchange,time:").append(LocalDateTime.now());
+        rabbitTemplate.convertAndSend(dpExchange, dpRoutingKey, stringBuffer.toString(), a -> {
+            a.getMessageProperties().setDelay(time);
+            return a;
+        }, create());
     }
 
     /**

@@ -53,8 +53,8 @@ public class Receiver {
 
     @RabbitListener(queuesToDeclare =
             @Queue(value = "${amqp-config.delay.delay}",durable = "true",arguments = {
-                    @Argument(name = "x-dead-letter-exchange",value = "${amqp-config.direct.dlxExchange}"),
-                    @Argument(name = "x-dead-letter-routing-key",value = "${amqp-config.direct.dlxRoutingKey}"),
+                    @Argument(name = "x-dead-letter-exchange",value = "${amqp-config.delay.dlxExchange}"),
+                    @Argument(name = "x-dead-letter-routing-key",value = "${amqp-config.delay.dlxRoutingKey}"),
                     @Argument(name = "x-message-ttl",value = "10000",type = "int"),
                     @Argument(name = "x-max-length",value = "5",type = "int")
             }
@@ -62,12 +62,18 @@ public class Receiver {
     )
     public void delay(Message message, Channel channel) throws IOException {
         channel.basicNack(message.getMessageProperties().getDeliveryTag(),false,false);
-        log.info("direct delay consumer:{}", new String(message.getBody()));
+        log.info("delay consumer:{}", new String(message.getBody()));
     }
 
     @RabbitListener(queuesToDeclare = @Queue(value = "${amqp-config.delay.deadLetter}", durable = "true"))
     public void delayLetter(Message message, Channel channel) throws IOException {
-        channel.basicAck(message.getMessageProperties().getDeliveryTag(), true);
-        log.info("direct delay letter consumer:{}", new String(message.getBody()));
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+        log.info("delay letter consumer:{}", new String(message.getBody()));
+    }
+
+    @RabbitListener(queuesToDeclare = @Queue(value = "${amqp-config.delay.delayPlugins}", durable = "true"))
+    public void dp(Message message, Channel channel) throws IOException {
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+        log.info("delay plugins consumer:{}", new String(message.getBody()));
     }
 }

@@ -18,18 +18,24 @@ public class DelayQueueMode {
     private String delay;
     @Value("${amqp-config.delay.deadLetter}")
     private String delayLetter;
+    @Value("${amqp-config.delay.delayPlugins}")
+    private String delayPlugins;
     @Value("${amqp-config.delay.delayExchange}")
     private String delayExchange;
     @Value("${amqp-config.delay.dlxExchange}")
     private String dlxExchange;
+    @Value("${amqp-config.delay.dpExchange}")
+    private String dpExchange;
     @Value("${amqp-config.delay.delayRouting}")
     private String delayRouting;
     @Value("${amqp-config.delay.dlxRoutingKey}")
     private String dlxRoutingKey;
+    @Value("${amqp-config.delay.dpRoutingKey}")
+    private String dpRoutingKey;
 
     @Bean
     Queue delay(){
-        Map<String, Object> args = new HashMap<>(3);
+        Map<String, Object> args = new HashMap<>(7);
         // x-dead-letter-exchange    这里声明当前队列绑定的死信交换机
         args.put("x-dead-letter-exchange", dlxExchange);
         // x-dead-letter-routing-key  deadLetterExchange
@@ -40,6 +46,11 @@ public class DelayQueueMode {
         args.put("x-max-length", 5);
         //队列名 是否持久化 是否排他 是否自动删除 其他参数
         return QueueBuilder.durable(delay).withArguments(args).build();
+    }
+
+    @Bean
+    Queue dp(){
+        return QueueBuilder.durable(delayPlugins).build();
     }
 
     /**
@@ -53,6 +64,13 @@ public class DelayQueueMode {
     @Bean
     DirectExchange delayExchange(){
         return new DirectExchange(delayExchange,true,false);
+    }
+
+    @Bean
+    CustomExchange dpExchange(){
+        Map<String, Object> args = new HashMap<>();
+        args.put("x-delayed-type", "direct");
+        return new CustomExchange(dpExchange, "x-delayed-message", true, false, args);
     }
 
     @Bean
@@ -71,5 +89,10 @@ public class DelayQueueMode {
     @Bean
     Binding deadLetterBinding(){
         return BindingBuilder.bind(deadLetter()).to(deadLetterExchange()).with(dlxRoutingKey);
+    }
+
+    @Bean
+    Binding dpBinding(){
+        return BindingBuilder.bind(dp()).to(dpExchange()).with(dpRoutingKey).noargs();
     }
 }

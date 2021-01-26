@@ -19,10 +19,11 @@ spring:
       retry:
         enabled: true
         max-attempts: 3 # 传递消息的最大尝试次数
-        max-interval: 3000 # 尝试的最大时间间隔
+        max-interval: 10000 # 尝试的最大时间间隔
       mandatory: true
     #消费端配置
     listener:
+      type: simple
       simple:
         #自动签收auto  手动 manual
         acknowledge-mode: manual
@@ -52,7 +53,10 @@ amqp-config:
   delay:
     deadLetter: deadLetter
     delay: delay
-    delayExchange: delayExchange
+    delayPlugins: delayPlugins
+    delayExchange: dyExchange
     dlxExchange: deadLetterExchange
+    dpExchange: dpExchange
     delayRouting: delayRoutingKey
     dlxRoutingKey: deadLetterRoutingKey
+    dpRoutingKey: dpRoutingKey
