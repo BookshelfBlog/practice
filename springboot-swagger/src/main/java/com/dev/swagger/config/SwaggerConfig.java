@@ -23,7 +23,6 @@ import java.util.List;
 /**
  * @ClassName : SwaggerConfig  //类名
  * @Description : swagger配置  //描述
- * @Author : hao niu  //作者
  * @Date: 2020-11-18 11:56  //时间
  */
 @Configuration
@@ -57,8 +56,8 @@ public class SwaggerConfig {
                         .title("Swagger3接口文档")
                         .description("测试swagger3文档")
                         .version("v1.0")
-                        .contact(new Contact().name("Hao Niu").url(IpUtils.getHostIp()))
-                        .license(new License().name("Hao Niu").url(IpUtils.getHostIp())))
+                        .contact(new Contact().name("admin").url(IpUtils.getHostIp()))
+                        .license(new License().name("admin").url(IpUtils.getHostIp())))
                         .externalDocs(new ExternalDocumentation()
                             .description("null")
                             .url("null")
@@ -69,7 +68,7 @@ public class SwaggerConfig {
 //        return new ApiInfoBuilder()
 //                .title("Swagger3接口文档")
 //                .description("springboot-swagger3")
-//                .contact(new Contact("Hao Niu", IpUtils.getHostIp(), "xxx.@163.com"))
+//                .contact(new Contact("admin", IpUtils.getHostIp(), "xxx.@163.com"))
 //                .version("1.0")
 //                .build();
 //    }

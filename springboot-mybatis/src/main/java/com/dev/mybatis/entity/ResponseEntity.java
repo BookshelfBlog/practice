@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * @ClassName : ResponseEntity  //类名
  * @Description : 响应实体  //描述
- * @Author : hao niu  //作者
  * @Date: 2020-11-17 09:09  //时间
  */
 @Data

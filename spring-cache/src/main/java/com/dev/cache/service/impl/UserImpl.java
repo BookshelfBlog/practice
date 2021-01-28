@@ -19,7 +19,6 @@ import java.util.Objects;
  *
  * 用户信息 服务实现类
  *
- * @author hao niu
  * @since 2020-11-27
  */
 @Service

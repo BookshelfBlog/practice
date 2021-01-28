@@ -11,7 +11,6 @@ import java.util.List;
 /**
  * @ClassName : UserServiceImpl  //类名
  * @Description : 用户业务层  //描述
- * @Author : hao niu  //作者
  * @Date: 2020-11-17 10:52  //时间
  */
 @Service

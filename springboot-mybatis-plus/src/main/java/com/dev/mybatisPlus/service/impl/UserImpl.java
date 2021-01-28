@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
  * 用户信息 服务实现类
  * </p>
  *
- * @author hao niu
  * @since 2020-11-18
  */
 @Service

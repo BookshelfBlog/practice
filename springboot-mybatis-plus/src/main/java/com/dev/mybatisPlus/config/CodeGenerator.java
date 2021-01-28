@@ -14,7 +14,6 @@ import java.util.List;
 /**
  * @ClassName : CodeGenerator  类名
  * @Description :   描述
- * @Author : niuhao  作者
  */
 public class CodeGenerator {
     public static void main(String[] args) throws InterruptedException {
@@ -34,7 +33,7 @@ public class CodeGenerator {
         gc.setBaseColumnList(true);
         gc.setOpen(false);
         gc.setSwagger2(true);
-        gc.setAuthor("hao niu");
+        gc.setAuthor("admin");
 
         // 自定义文件命名，注意 %s 会自动填充表实体属性！
         gc.setMapperName("%sDao");

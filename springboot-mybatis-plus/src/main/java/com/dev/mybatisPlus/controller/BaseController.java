@@ -19,8 +19,6 @@ import java.util.Properties;
 
 /**
  * web层通用数据处理
- *
- * @author niuhao
  */
 @Slf4j
 public class BaseController

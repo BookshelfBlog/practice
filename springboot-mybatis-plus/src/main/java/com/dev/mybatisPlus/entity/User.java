@@ -11,7 +11,6 @@ import lombok.Data;
 
 /**
  * 用户信息
- * @author hao niu
  * @date 2020-11-18
  */
 @Data

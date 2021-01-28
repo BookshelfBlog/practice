@@ -10,7 +10,6 @@ import java.util.List;
  * 用户信息 服务类
  * </p>
  *
- * @author hao niu
  * @since 2020-11-27
  */
 public interface UserService extends IService<User> {

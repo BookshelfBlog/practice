@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @ClassName : Swagger3Controller  //类名
  * @Description : 整合swagger3  //描述
- * @Author : Hao Niu  //作者
+ *
  * @Date: 2020-11-18 13:06  //时间
  */
 @Tag(name = "我是name",description = "我是description")

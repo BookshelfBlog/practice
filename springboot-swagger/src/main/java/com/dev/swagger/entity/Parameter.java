@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * @ClassName : parameter  //类名
  * @Description : 参数实例  //描述
- * @Author : Hao Niu  //作者
+ *
  * @Date: 2020-11-18 13:42  //时间
  */
 @Data

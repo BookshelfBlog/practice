@@ -14,7 +14,6 @@ import java.util.Properties;
 /**
  * @ClassName : MybatisPlusConfig  //类名
  * @Description :   //描述
- * @Author : niuhao  //作者
  */
 @EnableTransactionManagement
 @Configuration

@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * @ClassName : UserDao  //类名
  * @Description : 用户管理  //描述
- * @Author : hao niu  //作者
  * @Date: 2020-11-17 09:44  //时间
  */
 @Mapper

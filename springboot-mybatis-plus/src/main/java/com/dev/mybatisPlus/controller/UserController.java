@@ -16,7 +16,6 @@ import com.dev.mybatisPlus.entity.User;
  *
  *  用户信息 前端控制器
  *
- * @author: hao niu
  * @date: 2020-11-18
  */
 @RestController

@@ -7,8 +7,6 @@ import java.io.Serializable;
 
 /**
  * 分页数据
- * 
- * @author niuhao
  */
 @Data
 public class PageDomain implements Serializable
