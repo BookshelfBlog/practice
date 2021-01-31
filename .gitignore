@@ -23,6 +23,15 @@ target/
 /springboot-frist-web/.mvn/wrapper/
 /springboot-redis/.mvn/wrapper/
 /springboot-swagger/.mvn/wrapper/
+/springboot-aop/.mvn/wrapper/
+/springboot-cxf/.mvn/wrapper/
+/springboot-rabbitMq/.mvn/wrapper/
+/spring-cache/.mvn/wrapper/
+/springboot-async/.mvn/wrapper/
+/springboot-quartz/.mvn/wrapper/
+/springboot-shiro/.mvn/wrapper/
+/springboot-thymeleaf/.mvn/wrapper/
+/springboot-websocket/.mvn/wrapper/
 
 ### NetBeans ###
 /nbproject/private/
