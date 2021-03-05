@@ -1,0 +1,73 @@
+package $!{package.Controller};
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.dev.quartz.util.AjaxResult;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import java.util.Objects;
+import $!{package.Service}.$!{table.serviceName};
+import $!{package.Entity}.$!{table.entityName};
+
+#if(${superControllerClassPackage})
+import $!{superControllerClassPackage};
+#end
+
+/**
+ *  $!{table.comment} 前端控制器
+ */
+@Controller
+@RequestMapping({"#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end"})
+public class $!{table.controllerName} {
+
+    @Autowired
+    private $!{table.serviceName} service;
+
+    @PostMapping({"list"})
+    public AjaxResult list($!{table.entityName} entity){
+        QueryWrapper<$!{table.entityName}> qw = new QueryWrapper<$!{table.entityName}>();
+        qw.setEntity(entity)#foreach($field in ${table.fields})#if(${field.keyFlag}).orderByAsc("$!{field.name}");#end#end
+        return AjaxResult.success(service.list(qw));
+    }
+
+    @GetMapping({"selectOne"})
+    public AjaxResult getById(@RequestParam("id") Integer id) {
+        return AjaxResult.success("查询成功!",service.getById(id));
+    }
+
+    @PostMapping({"save"})
+    public AjaxResult save(@RequestBody $!{table.entityName} entity) {
+        return AjaxResult.toRow(service.save(entity));
+    }
+
+    @PutMapping({"update"})
+    public AjaxResult update(@RequestBody $!{table.entityName} entity) {
+    #foreach($entity in ${table.fields})
+        #if(${entity.keyFlag})##生成主键排在第一位
+        #set($getId = "entity.get" + $entity.propertyName.substring(0, 1).toUpperCase() + $entity.propertyName.substring(1) + "()")
+        if(Objects.isNull($getId)){
+            return AjaxResult.error("参数为空!");
+        }
+        var result = service.getById($getId);
+        #end
+    #end
+        if(Objects.nonNull(result)){
+            return AjaxResult.toRow(service.updateById(entity));
+        }else{
+            return AjaxResult.error("数据不存在!");
+        }
+    }
+
+    @DeleteMapping({"remove"})
+    public AjaxResult remove(@RequestParam("id") Integer id) {
+        if(Objects.isNull(id)){
+            return AjaxResult.error("参数为空!");
+        }
+        var entity = service.getById(id);
+        if(Objects.nonNull(entity)){
+            return AjaxResult.toRow(service.removeById(id));
+        }else{
+            return AjaxResult.error("数据不存在!");
+        }
+    }
+}
