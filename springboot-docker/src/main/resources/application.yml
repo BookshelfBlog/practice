@@ -1,0 +1,7 @@
+server:
+  port: 8080
+  servlet:
+    contest-path: /
+spring:
+  application:
+    name: springboot-docker
