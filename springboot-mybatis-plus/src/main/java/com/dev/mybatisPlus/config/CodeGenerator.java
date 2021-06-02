@@ -36,7 +36,7 @@ public class CodeGenerator {
         gc.setAuthor("admin");
 
         // 自定义文件命名，注意 %s 会自动填充表实体属性！
-        gc.setMapperName("%sDao");
+        gc.setMapperName("%sMapper");
         gc.setXmlName("%sMapper");
         gc.setServiceName("%sService");
         gc.setServiceImplName("%sImpl");
@@ -48,7 +48,7 @@ public class CodeGenerator {
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setDbType( DbType.MYSQL);
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUrl("jdbc:mysql://localhost/simple?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false");
+        dsc.setUrl("jdbc:mysql://localhost/test?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false");
         dsc.setUsername("root");
         dsc.setPassword("123456");
         mpg.setDataSource(dsc);
@@ -60,6 +60,7 @@ public class CodeGenerator {
                 .setEntity( "entity" )
                 .setService("service")
                 .setServiceImpl("service.impl")
+                .setXml("mapper.xml")
                 .setMapper("mapper");
         mpg.setPackageInfo(pc);
 
@@ -75,7 +76,7 @@ public class CodeGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输入文件名称
-                return projectPath + "/springboot-mybatis-plus/src/main/resources/mybatis/"
+                return projectPath + "/springboot-mybatis-plus/src/main/java/com/dev/mybatisPlus/mapper/xml/"
                         + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });
