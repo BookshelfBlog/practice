@@ -5,15 +5,16 @@ import com.dev.mybatisPlus.util.page.PageDomain;
 import com.dev.mybatisPlus.util.page.TableDataInfo;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
+import java.beans.PropertyEditorSupport;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Properties;
 
@@ -23,7 +24,6 @@ import java.util.Properties;
 @Slf4j
 public class BaseController
 {
-
     /**
      * 将前台传递过来的日期格式的字符串，自动转化为Date类型
      */
@@ -31,14 +31,14 @@ public class BaseController
     public void initBinder(WebDataBinder binder)
     {
         // Date 类型转换
-//        binder.registerCustomEditor(Date.class, new PropertyEditorSupport()
-//        {
-//            @Override
-//            public void setAsText(String text)
-//            {
-//                setValue(DateUtils.parseDate(text));
-//            }
-//        });
+        binder.registerCustomEditor(LocalDateTime.class, new PropertyEditorSupport()
+        {
+            @Override
+            public void setAsText(String text)
+            {
+                setValue(LocalDateTime.parse(text, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+            }
+        });
     }
 
     /**
@@ -169,19 +169,11 @@ public class BaseController
     }
 
     /**
-     * 返回错误码消息
-     */
-    public AjaxResult error(AjaxResult.Type type, String message)
-    {
-        return new AjaxResult(type, message);
-    }
-
-    /**
      * 页面跳转
      */
     public String redirect(String url)
     {
-        return redirect(url);
+        return "redirect:" + url;
     }
 
     /**

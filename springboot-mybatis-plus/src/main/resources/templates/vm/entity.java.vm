@@ -4,11 +4,12 @@ package ${package.Entity};
 import ${pkg};
 #end
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
+import org.springframework.format.annotation.DateTimeFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 ## 表备注，作者，日期
 /**
  * $!{table.comment}
@@ -19,6 +20,10 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
+#end
+@TableName("${table.name}")
+#if($!{swagger2})
+@ApiModel("$!{table.comment}")
 #end
 #if(${superEntityClass})
 public class ${entity} extends ${superEntityClass}#if(${activeRecord})<${entity}>#end {
@@ -35,13 +40,20 @@ public class ${entity} implements Serializable {
     #if($field.propertyType == "Integer" || $field.propertyType == "int")
         #if(${field.keyFlag})
             #if($field.comment == "")
+
     /**
-     * ${field.name}
-     */
+      * ${field.name}
+      */
+                #if($!{swagger2})
+    @ApiModelProperty(value = "${field.name}",required = true)
+                #end
             #else
     /**
-     * ${field.comment}
-     */
+      * ${field.comment}
+      */
+                #if($!{swagger2})
+    @ApiModelProperty(value = "${field.comment}",required = true)
+                #end
             #end
             #if(${field.keyIdentityFlag})
     @TableId(value = "${field.name}", type = IdType.AUTO)
@@ -54,16 +66,26 @@ public class ${entity} implements Serializable {
     /**
      * ${field.comment}
      */
+            #if($!{swagger2})
+    @ApiModelProperty(value = "${field.comment}",required = false)
+            #end
         #end
     #elseif($field.propertyType == "LocalDateTime")
     /**
      * ${field.comment}
      */
+        #if($!{swagger2})
+    @ApiModelProperty(value = "${field.comment}",required = false)
+        #end
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     #else
     /**
      * ${field.comment}
      */
+        #if($!{swagger2})
+    @ApiModelProperty(value = "${field.comment}",required = false)
+        #end
     #end
     private ${field.propertyType} ${field.propertyName};
 #end
@@ -77,5 +99,5 @@ public class ${entity} implements Serializable {
         #end
     #end
     }
-    #end
+#end
 }
