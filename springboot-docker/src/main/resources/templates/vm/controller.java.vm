@@ -1,0 +1,103 @@
+package $!{package.Controller};
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.dev.docker.util.AjaxResult;
+import org.apache.ibatis.annotations.Delete;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.util.CollectionUtils;
+import javax.validation.Valid;
+import java.util.Objects;
+import java.util.List;
+import $!{package.Service}.$!{table.serviceName};
+import $!{package.Entity}.$!{table.entityName};
+
+#if(${superControllerClassPackage})
+import $!{superControllerClassPackage};
+#end
+
+/**
+ *
+ *  $!{table.comment} 前端控制器
+ *
+ * @author: $!{author}
+ * @date: $!{date}
+ */
+@RestController
+@RequestMapping({"#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end"})
+#if(${kotlin})
+class $!{table.controllerName}#if(${superControllerClass}) : $!{superControllerClass}()#end
+
+#else
+#if(${superControllerClass})
+public class $!{table.controllerName} extends $!{superControllerClass} {
+#else
+public class $!{table.controllerName} {
+#end
+
+    @Autowired
+    private $!{table.serviceName} service;
+
+    @GetMapping({"list"})
+    public AjaxResult list($!{table.entityName} entity,Page page){
+        QueryWrapper<$!{table.entityName}> qw = new QueryWrapper<$!{table.entityName}>();
+        qw.setEntity(entity)#foreach($field in ${table.fields})#if(${field.keyFlag}).orderByAsc("$!{field.name}");#end#end
+        return success(service.page(page,qw));
+    }
+
+    @GetMapping({"/getOne/{id}"})
+    public AjaxResult getById(@PathVariable("id") int id) {
+        return success("查询成功!",service.getById(id));
+    }
+
+    @PostMapping({"save"})
+    public AjaxResult save(@RequestBody @Valid $!{table.entityName} entity) {
+        return service.save(entity) ? success() : error();
+    }
+
+    @PostMapping({"saveBatch"})
+    public AjaxResult saveBatch(@RequestBody List<$!{table.entityName}> entitys) {
+        if(CollectionUtils.isEmpty(entitys)){
+            return error("参数为空!");
+        }
+        return service.saveBatch(entitys) ? success() : error();
+    }
+
+    @PutMapping({"update"})
+    public AjaxResult update(@RequestBody $!{table.entityName} entity) {
+    #foreach($entity in ${table.fields})
+        #if(${entity.keyFlag})##生成主键排在第一位
+        #set($getId = "entity.get" + $entity.propertyName.substring(0, 1).toUpperCase() + $entity.propertyName.substring(1) + "()")
+        if(Objects.isNull($getId)){
+            return error("参数为空!");
+        }
+        var result = service.getById($getId);
+        #end
+    #end
+        if(Objects.nonNull(result)){
+            return service.updateById(entity) ? success() : error();
+        }else{
+            return error("数据不存在!");
+        }
+    }
+
+    @PutMapping({"updateBatch"})
+    public AjaxResult updateBatch(@RequestBody List<$!{table.entityName}> entitys) {
+        if(CollectionUtils.isEmpty(entitys)){
+            return error("参数为空!");
+        }
+        return service.updateBatchById(entitys) ? success() : error();
+    }
+
+    @DeleteMapping({"/remove/{id}"})
+    public AjaxResult remove(@PathVariable("id") int id) {
+        var entity = service.getById(id);
+        if(Objects.nonNull(entity)){
+            return service.removeById(id) ? success() : error();
+        }else{
+            return error("数据不存在!");
+        }
+    }
+}
+#end

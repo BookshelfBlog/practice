@@ -3,5 +3,5 @@ FROM openjdk:11
 RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 VOLUME /tmp
 COPY target/*.jar springboot-docker.jar
-EXPOSE 80
+EXPOSE 8080
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/springboot-docker.jar"]

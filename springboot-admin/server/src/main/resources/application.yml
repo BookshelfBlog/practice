@@ -1,0 +1,36 @@
+server:
+  port: 8090
+  servlet:
+    contest-path: /
+spring:
+  application:
+    name: admin-server
+  security:
+    user:
+      name: 'admin'
+      password: 'admin'
+#网易：经过测试基本无过长延时
+#  mail:
+#    host: smtp.163.com
+#    username: 发送人@163.com
+#    password: 授权码
+#  boot:
+#    admin:
+#      notify:
+#        mail:
+#          enabled: true
+#          to: 接收人
+#          from: 发送人@163.com
+#QQ：经过测试通知邮件延时在5-30分钟之间（延时=收到邮件的时间-发送邮件的时间）
+#  mail:
+#    host: smtp.qq.com
+#    username: 发送人@qq.com
+#    password: 授权码
+#    default-encoding: UTF-8
+#  boot:
+#    admin:
+#      notify:
+#        mail:
+#          enabled: true
+#          to: 接收人
+#          from: 发送人@qq.com

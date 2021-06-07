@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.docker.mapper.StudentMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.dev.docker.entity.Student">
+                    <id column="stu_id" property="stuId" />
+                    <result column="stu_name" property="stuName" />
+                    <result column="stu_no" property="stuNo" />
+                    <result column="class_id" property="classId" />
+                    <result column="sex" property="sex" />
+                    <result column="address" property="address" />
+                    <result column="phone" property="phone" />
+                    <result column="ins_time" property="insTime" />
+                    <result column="edit_time" property="editTime" />
+                    <result column="status" property="status" />
+                    <result column="delete_flag" property="deleteFlag" />
+        </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        stu_id, stu_name, stu_no, class_id, sex, address, phone, ins_time, edit_time, status, delete_flag
+    </sql>
+
+    <update id="deleteById" parameterType="integer">
+        update student set delete_flag = '1' where id = #{id}
+    </update>
+</mapper>
