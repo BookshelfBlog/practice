@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.util.CollectionUtils;
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Objects;
-import com.dev.docker.service.StudentService;
-import com.dev.docker.entity.Student;
+import java.util.List;
+import com.dev.docker.service.InfoService;
+import com.dev.docker.entity.Info;
 
 import static com.dev.docker.util.AjaxResult.error;
 import static com.dev.docker.util.AjaxResult.success;
@@ -18,22 +18,22 @@ import static com.dev.docker.util.AjaxResult.success;
 
 /**
  *
- *  学生 前端控制器
+ *  教师 前端控制器
  *
  * @author: admin
- * @date: 2021-06-03
+ * @date: 2021-06-10
  */
 @RestController
-@RequestMapping({"student"})
-public class StudentController {
+@RequestMapping({"info"})
+public class InfoController {
 
     @Autowired
-    private StudentService service;
+    private InfoService service;
 
     @GetMapping({"list"})
-    public AjaxResult list(Student entity, Page page){
-        QueryWrapper<Student> qw = new QueryWrapper<Student>();
-        qw.setEntity(entity).orderByAsc("stu_id");
+    public AjaxResult list(Info entity,Page page){
+        QueryWrapper<Info> qw = new QueryWrapper<Info>();
+        qw.setEntity(entity).orderByAsc("id");
         return success(service.page(page,qw));
     }
 
@@ -43,12 +43,12 @@ public class StudentController {
     }
 
     @PostMapping({"save"})
-    public AjaxResult save(@RequestBody @Valid Student entity) {
+    public AjaxResult save(@RequestBody @Valid Info entity) {
         return service.save(entity) ? success() : error();
     }
 
     @PostMapping({"saveBatch"})
-    public AjaxResult saveBatch(@RequestBody List<Student> entitys) {
+    public AjaxResult saveBatch(@RequestBody List<Info> entitys) {
         if(CollectionUtils.isEmpty(entitys)){
             return error("参数为空!");
         }
@@ -56,11 +56,11 @@ public class StudentController {
     }
 
     @PutMapping({"update"})
-    public AjaxResult update(@RequestBody Student entity) {
-        if(Objects.isNull(entity.getStuId())){
+    public AjaxResult update(@RequestBody Info entity) {
+        if(Objects.isNull(entity.getId())){
             return error("参数为空!");
         }
-        var result = service.getById(entity.getStuId());
+        var result = service.getById(entity.getId());
         if(Objects.nonNull(result)){
             return service.updateById(entity) ? success() : error();
         }else{
@@ -69,7 +69,7 @@ public class StudentController {
     }
 
     @PutMapping({"updateBatch"})
-    public AjaxResult updateBatch(@RequestBody List<Student> entitys) {
+    public AjaxResult updateBatch(@RequestBody List<Info> entitys) {
         if(CollectionUtils.isEmpty(entitys)){
             return error("参数为空!");
         }
