@@ -18,7 +18,7 @@ import static com.dev.docker.util.AjaxResult.success;
 
 /**
  *
- *  教师 前端控制器
+ *  前端控制器
  *
  * @author: admin
  * @date: 2021-06-10

@@ -15,8 +15,6 @@
     <description>docker project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>
-        <docker.image.prefix>test</docker.image.prefix>
-        <project.artifactId>test</project.artifactId>
         <project.build.directory>target/*.jar</project.build.directory>
         <project.build.finalName>springboot-docker</project.build.finalName>
     </properties>
@@ -104,22 +102,42 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.0.0</version>
                 <configuration>
-                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-                    <dockerDirectory></dockerDirectory>
+                    &lt;!&ndash;基础映像&ndash;&gt;
+                    <baseImage>openjdk:11</baseImage>
+                    &lt;!&ndash;标签&ndash;&gt;
+                    <imageTags>latest</imageTags>
+                    &lt;!&ndash;每次更新映像旧映像标签为none&ndash;&gt;
+                    <forceTags>true</forceTags>
+                    &lt;!&ndash;映像名称&ndash;&gt;
+                    <imageName>${project.build.finalName}</imageName>
+                    &lt;!&ndash;容器数据&ndash;&gt;
+                    <volumes>
+                        <volume>/temp</volume>
+                    </volumes>
+                    &lt;!&ndash;端口&ndash;&gt;
+                    <exposes>8080</exposes>
+                    &lt;!&ndash;dockerFile文件地址&ndash;&gt;
+                    <dockerDirectory>springboot-docker/</dockerDirectory>
+                    &lt;!&ndash;启动命令&ndash;&gt;
+                    <entryPoint>["java","-Djava.security.egd=file:/dev/./urandom","-jar","/${project.build.finalName}.jar"]</entryPoint>
+                    <dockerHost>http://192.168.0.149:2375</dockerHost>
                     <resources>
                         <resource>
+                            &lt;!&ndash;复制到的目录&ndash;&gt;
                             <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
+                            &lt;!&ndash;需要复制的目录&ndash;&gt;
+                            <directory>F:/practice/springboot-docker/target/*.jar</directory>
+                            &lt;!&ndash;需要复制的文件&ndash;&gt;
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 </project>

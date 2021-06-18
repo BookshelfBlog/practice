@@ -1,7 +1,12 @@
+# 基础镜像，若不存在自动拉取
 FROM openjdk:11
 # 设置时区
 RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
+# 容器数据卷
 VOLUME /tmp
+# 复制jar包
 COPY target/*.jar springboot-docker.jar
+# 映射端口
 EXPOSE 8080
+# 容器启动时要运行的命令
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/springboot-docker.jar"]
