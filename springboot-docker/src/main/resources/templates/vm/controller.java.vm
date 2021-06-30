@@ -43,17 +43,17 @@ public class $!{table.controllerName} {
     public AjaxResult list($!{table.entityName} entity,Page page){
         QueryWrapper<$!{table.entityName}> qw = new QueryWrapper<$!{table.entityName}>();
         qw.setEntity(entity)#foreach($field in ${table.fields})#if(${field.keyFlag}).orderByAsc("$!{field.name}");#end#end
-        return success(service.page(page,qw));
+        return AjaxResult.success(service.page(page,qw));
     }
 
     @GetMapping({"/getOne/{id}"})
     public AjaxResult getById(@PathVariable("id") int id) {
-        return success("查询成功!",service.getById(id));
+        return AjaxResult.success("查询成功!",service.getById(id));
     }
 
     @PostMapping({"save"})
     public AjaxResult save(@RequestBody @Valid $!{table.entityName} entity) {
-        return service.save(entity) ? success() : error();
+        return service.save(entity) ? AjaxResult.success() : AjaxResult.error();
     }
 
     @PostMapping({"saveBatch"})
@@ -61,7 +61,7 @@ public class $!{table.controllerName} {
         if(CollectionUtils.isEmpty(entitys)){
             return error("参数为空!");
         }
-        return service.saveBatch(entitys) ? success() : error();
+        return service.saveBatch(entitys) ? AjaxResult.success() : AjaxResult.error();
     }
 
     @PutMapping({"update"})
@@ -70,15 +70,15 @@ public class $!{table.controllerName} {
         #if(${entity.keyFlag})##生成主键排在第一位
         #set($getId = "entity.get" + $entity.propertyName.substring(0, 1).toUpperCase() + $entity.propertyName.substring(1) + "()")
         if(Objects.isNull($getId)){
-            return error("参数为空!");
+            return AjaxResult.error("参数为空!");
         }
         var result = service.getById($getId);
         #end
     #end
         if(Objects.nonNull(result)){
-            return service.updateById(entity) ? success() : error();
+            return service.updateById(entity) ? AjaxResult.success() : AjaxResult.error();
         }else{
-            return error("数据不存在!");
+            return AjaxResult.error("数据不存在!");
         }
     }
 
@@ -87,16 +87,16 @@ public class $!{table.controllerName} {
         if(CollectionUtils.isEmpty(entitys)){
             return error("参数为空!");
         }
-        return service.updateBatchById(entitys) ? success() : error();
+        return service.updateBatchById(entitys) ? AjaxResult.success() : AjaxResult.error();
     }
 
     @DeleteMapping({"/remove/{id}"})
     public AjaxResult remove(@PathVariable("id") int id) {
         var entity = service.getById(id);
         if(Objects.nonNull(entity)){
-            return service.removeById(id) ? success() : error();
+            return service.removeById(id) ? AjaxResult.success() : AjaxResult.error();
         }else{
-            return error("数据不存在!");
+            return AjaxResult.error("数据不存在!");
         }
     }
 }

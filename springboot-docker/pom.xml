@@ -15,8 +15,8 @@
     <description>docker project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>
-        <project.build.directory>target/*.jar</project.build.directory>
-        <project.build.finalName>springboot-docker</project.build.finalName>
+        <!--<project.build.directory>target/*.jar</project.build.directory>
+        <project.build.finalName>springboot-docker</project.build.finalName>-->
     </properties>
     <dependencies>
         <dependency>
@@ -125,7 +125,6 @@
                     <dockerDirectory>springboot-docker/</dockerDirectory>
                     &lt;!&ndash;启动命令&ndash;&gt;
                     <entryPoint>["java","-Djava.security.egd=file:/dev/./urandom","-jar","/${project.build.finalName}.jar"]</entryPoint>
-                    <dockerHost>http://192.168.0.149:2375</dockerHost>
                     <resources>
                         <resource>
                             &lt;!&ndash;复制到的目录&ndash;&gt;
