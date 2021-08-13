@@ -1,6 +1,7 @@
 package $!{package.Controller};
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dev.mybatisPlus.util.AjaxResult;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,17 @@ public class $!{table.controllerName} {
     @ApiOperation(value = "$!{table.comment}列表查询")
     #end
     @GetMapping({"list"})
-    public TableDataInfo list($!{table.entityName} entity,PageDomain pageDomain){
+    public AjaxResult list($!{table.entityName} entity){
+        QueryWrapper<$!{table.entityName}> qw = new QueryWrapper<$!{table.entityName}>();
+        qw.setEntity(entity)#foreach($field in ${table.fields})#if(${field.keyFlag}).orderByAsc("$!{field.name}");#end#end
+        return success(service.list(qw));
+    }
+
+    #if($!{swagger2})
+    @ApiOperation(value = "$!{table.comment}分页查询")
+    #end
+    @GetMapping({"page"})
+    public TableDataInfo page($!{table.entityName} entity,PageDomain pageDomain){
         PageHelper.startPage(CheckPageDomain(pageDomain));
         QueryWrapper<$!{table.entityName}> qw = new QueryWrapper<$!{table.entityName}>();
         qw.setEntity(entity)#foreach($field in ${table.fields})#if(${field.keyFlag}).orderByAsc("$!{field.name}");#end#end
