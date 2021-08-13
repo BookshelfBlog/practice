@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class Test {
 
     @Autowired
-    Producer producer;
+    private Producer producer;
 
     @GetMapping("/direct")
     public void direct(){

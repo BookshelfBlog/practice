@@ -49,14 +49,20 @@ public class Producer {
      */
     @Value("${amqp-config.delay.delayExchange}")
     private String delayExchange;
-    @Value("${amqp-config.delay.dlxExchange}")
-    private String dlxExchange;
     @Value("${amqp-config.delay.delayRouting}")
     private String delayRouting;
+
+    /**
+     * 死信接收队列
+     */
+    @Value("${amqp-config.delay.dlxExchange}")
+    private String dlxExchange;
     @Value("${amqp-config.delay.dlxRoutingKey}")
     private String dlxRoutingKey;
 
-
+    /**
+     * 延时队列
+     */
     @Value("${amqp-config.delay.dpExchange}")
     private String dpExchange;
     @Value("${amqp-config.delay.dpRoutingKey}")
@@ -105,30 +111,48 @@ public class Producer {
         rabbitTemplate.convertAndSend(T_EXCHANGE,STUDENT,stringBuffer.toString(), create());
     }
 
+    /**
+     * 主题交换机
+     * 根据绑定键发送至主题交换机，主题交换机根据路由键跟队列进行匹配，只发送至匹配成功的队列
+     */
     public void teacher(){
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("this message comes from topic exchange teacher,time:").append(LocalDateTime.now());
         rabbitTemplate.convertAndSend(T_EXCHANGE,TEACHER,stringBuffer.toString(), create());
     }
 
+    /**
+     * 主题交换机
+     * 根据绑定键发送至主题交换机，主题交换机根据路由键跟队列进行匹配，只发送至匹配成功的队列
+     */
     public void topic(){
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("this message comes from topic exchange,time:").append(LocalDateTime.now());
         rabbitTemplate.convertAndSend(T_EXCHANGE,ROUTING,stringBuffer.toString(), create());
     }
 
+    /**
+     * 死信队列
+     */
     public void delay(){
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("this message comes from dead Exchange,time:").append(LocalDateTime.now());
         rabbitTemplate.convertAndSend(delayExchange, delayRouting, stringBuffer.toString(), create());
     }
 
+    /**
+     * 死信接收队列
+     */
     public void deadLetter(){
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("this message comes from dead letter Exchange,time:").append(LocalDateTime.now());
         rabbitTemplate.convertAndSend(dlxExchange, dlxRoutingKey, stringBuffer.toString(), create());
     }
 
+    /**
+     * 延时队列
+     * @param time
+     */
     public void dp(Integer time){
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("this message comes from delay plugins Exchange,time:").append(LocalDateTime.now());
