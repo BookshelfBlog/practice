@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dev.dynamic.mapper.ParmsMapper">
+
+        <!-- 通用查询映射结果 -->
+        <resultMap id="BaseResultMap" type="com.dev.dynamic.entity.Parms">
+                    <id column="id" property="id" />
+                    <result column="languages" property="languages" />
+                    <result column="nation" property="nation" />
+                    <result column="established" property="established" />
+        </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, languages, nation, established
+    </sql>
+
+</mapper>
