@@ -1,20 +1,13 @@
 package com.dev.tools.problem;
 
 /**
- * @author niu hao
- * @describe
- * @date 2022-02-2022/2/24
+ * @describe 排序问题
  */
 public class Problem1 {
     /**
      * 求小和
      *
      * 在一个数组中，一个数左侧所有小于它的数的总和，叫做它的小和
-     *
-     * @param arr
-     * @param l
-     * @param r
-     * @return int
      */
     public static int smallSum(int[] arr, int l, int r) {
         if (l == r){

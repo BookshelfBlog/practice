@@ -3,9 +3,7 @@ package com.dev.tools.sort;
 import java.util.Arrays;
 
 /**
- * @author niu hao
- * @describe
- * @date 2022-02-2022/2/25
+ * @describe 堆排序
  */
 public class Example2 {
     public static void heapSort(int[] arr){

@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @Description : 群发消息  //描述
  */
 @Slf4j
-@ServerEndpoint("/result")
+@ServerEndpoint(value = "/result", encoders = {ServerEncoder.class})
 @Component
 public class SendObjectMessage {
 
@@ -56,8 +56,7 @@ public class SendObjectMessage {
     /**
      * 收到客户端消息后调用的方法
      *
-     * @param message
-     *            客户端发送过来的消息
+     * @param message 客户端发送过来的消息
      */
     @OnMessage
     public void onMessage(String message, Session session) throws IOException {

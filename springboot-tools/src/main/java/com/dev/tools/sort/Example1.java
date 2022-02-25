@@ -7,7 +7,6 @@ import java.util.*;
  * @ClassName : Example1  //类名
  * @Description : 冒泡  //描述
  * @Author :   //作者
- * @Date: 2021-05-08 16:51  //时间
  */
 public class Example1 {
 
@@ -32,7 +31,12 @@ public class Example1 {
     }
 
     /**
-     * 交换
+     * 异或法则(a、b不能为同一引用)
+     * 1.恒等律:x ^ 0 = x
+     * 2.归零律:x ^ x = 0
+     * 3.结合律:x ^ y ^ z = (x ^ y) ^ z = x ^ (y ^ z)
+     * 4.自反律:x ^ y ^ x = y
+     * 5.交换律:x ^ y = y ^ x
      */
     public static void swap(int[] arr, int a, int b) {
         if (arr[a] == arr[b]){
@@ -46,7 +50,6 @@ public class Example1 {
     /**
      * 插入
      * @describe 每个元素与前一个元素比较，将较小的元素放在左边
-     *
      */
     public static void insertionSort(int[] list){
         if (isEmpty(list) || list.length < 3){
@@ -63,6 +66,7 @@ public class Example1 {
 
     /**
      * 选择
+     * 循环比较数组元素，将较大数记录，单次循环结束交换元素位置
      */
     public static void selectionSort(int[] arr) {
         if (isEmpty(arr) || arr.length < 3){
@@ -162,7 +166,7 @@ public class Example1 {
                 //把当前数归到more区域，下标-1
                 swap(arr, --more, l);
             } else {
-                //推着equal区域右移
+                //推着equals区域右移
                 l++;
             }
         }
@@ -176,6 +180,9 @@ public class Example1 {
         return Objects.isNull(list) || list.length == 0;
     }
 
+    /**
+     * 对数器
+     */
     public static void compore(int[] arr){
         Arrays.sort(arr);
     }
